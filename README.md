@@ -6,7 +6,8 @@ The recommendation system analyzes a dataset of books to suggest relevant titles
 
 # Live Demo or Walkthrough
 
-[Click here to view the LinkedIn demo post] 
+LinkedIn Post: [https://www.linkedin.com/posts/manvi-sahu_bookrecommendationsystem-python-django-activity-7315413000008450050-4oaK]
+ 
 
 # Made By
 
