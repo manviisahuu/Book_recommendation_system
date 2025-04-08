@@ -1,0 +1,150 @@
+/* === GLOBAL === */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #ffffff;
+    color: #333;
+    transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    background-color: white;
+    color: black !important;
+    border: 1px solid black;
+}
+
+/* === DARK MODE === */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+.dark-mode a,
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode p,
+.dark-mode .text,
+.dark-mode input[type="text"],
+.dark-mode input[type="email"],
+.dark-mode input[type="password"] {
+    color: white !important;
+}
+
+.dark-mode input[type="text"],
+.dark-mode input[type="email"],
+.dark-mode input[type="password"] {
+    background-color: #333;
+    border: 1px solid #777;
+}
+
+.dark-mode button {
+    background-color: #333;
+    color: white;
+}
+
+/* === HOME PAGE LIGHT MODE === */
+body.bg-white h1,
+body.bg-white h2,
+body.bg-white p {
+    color: #111111;
+}
+
+/* === RECOMMENDATION PAGE === */
+#recommendationInput {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: 1px solid #999;
+    font-size: 16px;
+    outline: none;
+}
+
+#getRecommendationBtn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+#getRecommendationBtn:hover {
+    transform: scale(1.05);
+}
+
+/* === RECOMMENDED BOOK GRID === */
+.recommendation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* === BOOK CARD === */
+.card {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 15px;
+    border-radius: 10px;
+    width: 180px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card img {
+    max-height: 220px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.dark-mode .card {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 1px solid #444;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* === CONTACT PAGE === */
+.contact-form img {
+    display: none;
+}
+
+.contact-book-title {
+    display: none;
+}
+
+.contact-book-cover {
+    margin-top: -20px;
+}
+
+/* Make all nav links bold and transition smoothly */
+.nav-link {
+    font: bold;
+    transition: all 0.3s ease;
+    padding-bottom: 4px;
+    color: inherit; 
+}
+
+/* On hover: slightly increase size and change color */
+.nav-link:hover {
+    transform: scale(1.05);
+    color: #f30f0f; /* Light Blue */
+    cursor: pointer;
+}
+
+/* Current page (active link) */
+.active-link {
+    font-size: 1.1rem;
+    color: #3ce708; /* Bright Blue */
+    border-bottom: 2px solid #3b82f6;
+}
+
+
+

@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Recommendations{% endblock %}
+
+{% block content %}
+<br>
+<div class="container">
+    <!-- Page Heading (Bold) -->
+    <h2 class="text-center mt-6 text-3xl font-bold">📚 Book Recommendation System 📖</h2>
+
+
+    <!-- Full-Width Search Bar -->
+    <div class="flex flex-col md:flex-row items-center justify-center mt-10 px-8 gap-6">
+        <input type="text" id="book-title" class="w-full md:w-2/3 p-3 rounded-full border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter book title...">
+        <button class="search-btn hover:scale-105 transition duration-200 active:animate-ping px-7 py-4 bg-blue-700 text-white rounded-full hover:bg-blue-600 transition-transform transform hover:scale-105" onclick="fetchRecommendations()">Get Recommendations</button>
+    </div>
+    
+
+    <!-- Error Message -->
+    <div id="error-message" class="alert alert-danger mt-3 d-none"></div>
+
+    <!-- Recommended Books Section -->
+    <div id="recommendation-section" class="mt-4 d-none">
+        <h4 class="mb-3 text-center">📌 Recommended Books</h4><br><br>
+        <div id="recommendation-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-6"></div>
+
+
+    </div>
+
+    <!-- Footer Message -->
+    <div class="text-center mt-5 text-xl font-bold">✨ Enjoy Reading! ✨</div><br><br>
+</div>
+
+<!-- JavaScript for Fetching Recommendations -->
+<script>
+function fetchRecommendations() {
+    let bookTitle = document.getElementById("book-title").value.trim();
+    let errorDiv = document.getElementById("error-message");
+    let recSection = document.getElementById("recommendation-section");
+    let recList = document.getElementById("recommendation-list");
+
+    // Reset previous results
+    errorDiv.classList.add("d-none");
+    recSection.classList.add("d-none");
+    recList.innerHTML = "";
+
+    if (!bookTitle) {
+        errorDiv.textContent = "Please enter a book title.";
+        errorDiv.classList.remove("d-none");
+        return;
+    }
+
+    fetch(`/recommend/?book_title=${encodeURIComponent(bookTitle)}`)
+ // Fixed API endpoint
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                errorDiv.textContent = data.error;
+                errorDiv.classList.remove("d-none");
+                return;
+            }
+
+            if (!data.recommendations || data.recommendations.length === 0) {
+                errorDiv.textContent = "No recommendations found.";
+                errorDiv.classList.remove("d-none");
+                return;
+            }
+
+            // Show recommendations
+            recSection.classList.remove("d-none");
+
+            data.recommendations
+                .sort((a, b) => b.similarity_score - a.similarity_score) // Sort by similarity score (highest first)
+                .slice(0, 6) // Show only top 6 recommendations
+                .forEach(book => {
+                    let bookHTML = `
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <div class="text-center mt-3">
+                               <img src="${book.image_url || '/static/images/default-cover.jpg'}" class="book-cover" alt="Book Cover"
+                               onerror="this.onerror=null; this.src='/static/images/default-cover.jpg'">
+
+                                </div>
+
+                                <div class="card-body">
+                                    <h5 class="card-title">${book.title}</h5>
+                                    <p class="card-text"><strong>Author:</strong> ${book.author}</p>
+                                    <p class="card-text"><strong>Publisher:</strong> ${book.publisher || 'N/A'}</p>
+                                    <p class="card-text"><strong>Similarity Score:</strong> ${parseFloat(book.similarity_score).toFixed(2)}</p>
+                                </div>
+                            </div>
+                        </div>`;
+                    recList.innerHTML += bookHTML;
+                });
+        })
+        .catch(error => {
+            console.error("Error fetching recommendations:", error);
+            errorDiv.textContent = "Something went wrong. Please try again.";
+            errorDiv.classList.remove("d-none");
+        });
+}
+</script>
+
+<!-- CSS for Styling -->
+<style>
+    /* Make Heading Bold */
+    h2 {
+        font-weight: bold;
+    }
+
+    /* Full-Width Search Bar 
+    .form-control {
+        max-width: 80%;
+    }
+*/
+    /* Button Hover Effect */
+    .search-btn {
+        transition: background-color 0.3s ease;
+    }
+    .search-btn:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Grid Styling */
+    .card {
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px;
+     }
+
+    /* Book Cover Styling */
+    .book-cover {
+        height: 250px;
+        object-fit: contain;
+        border-radius: 8px;
+        width: auto;
+        max-width: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .book-cover[src*="default-cover.jpg"] {
+    border: 2px dashed red;
+}
+
+    /* Footer Message */
+    .text-muted {
+        font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+    .search-btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+</style>
+
+{% endblock %}
+
+
+
+
+
+
+

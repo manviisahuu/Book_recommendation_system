@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Book Store{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="flex flex-col md:flex-row items-center justify-between px-8 py-16">
+    <!-- Left Section (Text & Email Input) -->
+    <div class="w-full md:w-1/2 space-y-6">
+        <h1 id="homeHeading" class="text-5xl font-extrabold  leading-tight" style="font-family: 'Georgia', serif;">
+            "A book is a dream you hold in your hands."
+        </h1>
+        <p id="homeParagraph" class="text-lg leading-relaxed">
+            At <strong>BookStore</strong>, we believe in the power of stories to inspire, transport, and transform.
+            Whether you're searching for the latest bestseller, a timeless classic, or a hidden gem, our curated 
+            collection is designed to help you discover your next favorite read.
+        </p>
+        <p class="text-lg font-semibold">
+            Discover a world of books tailored to your interests. Explore our collection and get personalized recommendations!
+        </p>
+
+        <!-- Email Input & Get Started Button -->
+        <form id="emailForm" class="flex flex-col items-center space-y-4">
+            <input type="email" id="emailInput" name="email" placeholder="Enter your email" required 
+                   class="w-80 px-5 py-4 text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500">
+            <button type="submit" id="getStartedBtn" 
+                    class="px-6 py-3 w-40 bg-red-500 text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition text-center">
+                Get Started
+            </button>
+        </form>
+        <p id="errorMessage" class="text-red-500 hidden text-sm mt-2">Please enter a valid email before proceeding.</p>
+    </div>
+
+    <!-- Right Section (Book Image) -->
+    <div class="w-full md:w-1/2 flex justify-center">
+        <img src="{% static 'images/book coveres.png' %}" alt="Book Cover Image" 
+             class="w-[500px] h-[500px] object-cover rounded-lg shadow-lg">
+    </div>
+</section>
+
+<!-- JavaScript for Email Validation -->
+<script>
+    document.getElementById("emailForm").addEventListener("submit", function(event) {
+        let emailInput = document.getElementById("emailInput").value;
+        let errorMessage = document.getElementById("errorMessage");
+
+        if (!emailInput.trim() || !emailInput.includes("@")) {
+            event.preventDefault();  // Prevent form submission
+            errorMessage.classList.remove("hidden");
+        } else {
+            errorMessage.classList.add("hidden");
+            window.location.href = "{% url 'recommendation' %}";  // Redirect if email is valid
+        }
+    });
+</script>
+
+{% endblock %}
+

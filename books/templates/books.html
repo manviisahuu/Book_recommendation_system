@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Books - Book Store{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-center mb-4 mt-6">
+            Explore Books
+        </h1>
+        <p id="explore-text" class="text-lg text-center mb-8">
+            Find your next great read from our collection of books across various genres.
+        </p>
+        
+        <hr id="explore-line" class="border-gray-300 dark:border-gray-600 mb-6">
+        
+
+        <!-- Grid to Display Books -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
+            {% for book in page_books %}
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md cursor-pointer transition-transform duration-200 hover:scale-105">
+                    <img src="{{ book.image_url|default:'/static/default_cover.jpg' }}" alt="{{ book.book_title }}" class="w-full h-48 object-cover mb-2 rounded">
+                    <h3 class="text-lg font-bold text-black">{{ book.book_title }}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300">{{ book.book_author }}</p>
+                    <span class="text-gray-700 dark:text-gray-300 font-bold">Published: {{ book.year_of_publication }}</span>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="flex justify-center mt-6 space-x-2">
+            {% if page_books.has_previous %}
+                <a href="?page=1" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">First</a>
+                <a href="?page={{ page_books.previous_page_number }}" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Previous</a>
+            {% endif %}
+        
+            <span class="px-3 py-1 bg-gray-300 text-gray-800 dark:bg-gray-700 dark:text-white rounded">
+                Page {{ page_books.number }} of {{ page_books.paginator.num_pages }}
+            </span>
+        
+            {% if page_books.has_next %}
+                <a href="?page={{ page_books.next_page_number }}" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Next</a>
+                <a href="?page={{ page_books.paginator.num_pages }}" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Last</a>
+            {% endif %}
+        </div>
+        
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.search-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.book-card {
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    gap: 1.5rem;
+    color: var(--text-color);
+}
+
+.book-cover {
+    width: 160px;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.book-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.book-details h2 {
+    font-size: 1.75rem;
+    font-weight: 40;
+    margin-bottom: 0.5rem;
+}
+
+.book-details p {
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.quote-box {
+    margin-top: 2rem;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 1.2rem;
+    border-radius: 10px;
+    text-align: center;
+    font-style: italic;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.dark .quote-box {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .book-card {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+</style>
+
+<div class="search-container">
+    {% if book %}
+    <div class="book-card dark:bg-transparent bg-transparent">
+        <img src="{{ book.image_url|default:'/static/images/default-cover.jpg' }}" alt="{{ book.title }}" class="book-cover">
+        <div class="book-details">
+            <h2>{{ book.title }}</h2>
+            <p><strong>Author:</strong> {{ book.author }}</p>
+            <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+            <p><strong>Year:</strong> {{ book.year }}</p>
+        </div>
+    </div>
+
+    <div class="quote-box dark:text-gray-300">
+       "There is more trasure in books than in all the pirate's loot on Treasure Island"   <br> ~ Walt Disney
+    </div>
+    {% else %}
+    <div class="text-center text-red-500 text-xl font-semibold mt-12">No book found for your search.</div>
+    {% endif %}
+</div>
+{% endblock %}

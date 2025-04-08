@@ -1,0 +1,14 @@
+
+admin - http://127.0.0.1:8000/admin
+
+From there, you can access:
+
+Home: http://127.0.0.1:8000/home
+
+Books: http://127.0.0.1:8000/books
+
+Recommendation: http://127.0.0.1:8000/recommendations
+
+Contact: http://127.0.0.1:8000/contact
+
+Login: http://127.0.0.1:8000/login
